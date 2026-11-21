@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MINDCRAFT Online Academy - Weekly Mock Exam</title>
+<style>
+:root{--p:#5b21b6;--p2:#7c3aed;--pd:#3b0f7a;--pl:#f3edff;--line:#e4d9fb;--ok:#15803d;--bad:#b91c1c}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#faf7ff;color:#1f1535;line-height:1.5}
+.top{background:linear-gradient(135deg,var(--pd),var(--p2));color:#fff;text-align:center;padding:14px 10px;font-weight:800;letter-spacing:1px;font-size:1rem}
+.wrap{max-width:760px;margin:0 auto;padding:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:14px;box-shadow:0 2px 8px rgba(91,33,182,.08)}
+.hero{text-align:center;padding:28px 18px}
+.hero h1{margin:0 0 4px;color:var(--p);font-size:1.7rem;line-height:1.2}
+.hero h2{margin:0 0 10px;color:var(--p2);font-size:1.15rem}
+.muted{color:#6b5b8f;font-size:.92rem}
+label{display:block;text-align:left;font-weight:600;margin:14px 0 6px}
+input[type=text]{width:100%;padding:12px;border:2px solid var(--line);border-radius:10px;font-size:1rem}
+input[type=text]:focus{outline:none;border-color:var(--p2)}
+.btn{background:var(--p);color:#fff;border:0;border-radius:10px;padding:13px 20px;font-size:1rem;font-weight:700;cursor:pointer;width:100%;margin-top:14px}
+.btn:hover{background:var(--pd)}
+.btn:disabled{background:#c4b5e6;cursor:not-allowed}
+.btn.alt{background:#fff;color:var(--p);border:2px solid var(--p)}
+.btn.sm{width:auto;margin:0;padding:10px 16px}
+.sub{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:12px;padding:13px;margin-bottom:10px;cursor:pointer;background:#fff}
+.sub.on{border-color:var(--p);background:var(--pl)}
+.sub.lock{cursor:default}
+.sub .tick{width:24px;height:24px;border-radius:6px;border:2px solid var(--p2);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;flex:none}
+.sub.on .tick{background:var(--p)}
+.sub small{display:block;color:#6b5b8f}
+.tag{background:var(--p);color:#fff;border-radius:20px;padding:2px 10px;font-size:.75rem;margin-left:auto}
+ol.rules{padding-left:20px}
+ol.rules li{margin-bottom:9px}
+.good{text-align:center;font-weight:800;color:var(--p);font-size:1.15rem;margin-top:14px}
+.bar{position:sticky;top:0;z-index:5;background:var(--pd);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-weight:700}
+.bar .tm{font-size:1.25rem;font-variant-numeric:tabular-nums;background:#fff;color:var(--pd);border-radius:8px;padding:3px 10px}
+.bar .tm.warn{background:#fee2e2;color:var(--bad)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px}
+.tabs button{flex:none;border:2px solid var(--line);background:#fff;color:var(--p);border-radius:20px;padding:7px 14px;font-weight:700;cursor:pointer}
+.tabs button.on{background:var(--p);color:#fff;border-color:var(--p)}
+.passage{background:var(--pl);border-left:4px solid var(--p2);padding:12px 14px;border-radius:8px;margin-bottom:12px;font-size:.95rem}
+.q{font-weight:700;margin:6px 0 12px;font-size:1.05rem}
+.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:10px;padding:11px;margin-bottom:9px;font-size:1rem;cursor:pointer;color:#1f1535}
+.opt b{background:var(--pl);color:var(--p);border-radius:6px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;flex:none}
+.opt.sel{border-color:var(--p);background:var(--pl)}
+.opt.sel b{background:var(--p);color:#fff}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+.pal{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin-top:8px}
+.pal button{border:2px solid var(--line);background:#fff;border-radius:8px;padding:8px 0;font-weight:700;cursor:pointer;color:var(--p)}
+.pal button.ans{background:var(--p2);color:#fff;border-color:var(--p2)}
+.pal button.cur{outline:3px solid var(--pd)}
+.alert{background:#fff7ed;border:1px solid #fdba74;color:#9a3412;padding:9px 12px;border-radius:10px;margin-bottom:10px;font-size:.9rem}
+.score{text-align:center}
+.big{font-size:2.6rem;font-weight:800;color:var(--p);line-height:1.1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.mini{background:var(--pl);border-radius:10px;padding:10px;text-align:center}
+.mini b{display:block;font-size:1.3rem;color:var(--p)}
+.cq{border-top:1px solid var(--line);padding:14px 0}
+.cq .opt{cursor:default;padding:9px}
+.opt.right{border-color:var(--ok);background:#f0fdf4}
+.opt.right b{background:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:#fef2f2}
+.opt.wrong b{background:var(--bad);color:#fff}
+.st{font-size:.85rem;font-weight:700}
+.st.r{color:var(--ok)}.st.w{color:var(--bad)}.st.n{color:#92400e}
+.exp{background:var(--pl);border-radius:8px;padding:8px 10px;font-size:.92rem;margin-top:4px}
+.mdl{position:fixed;inset:0;background:rgba(30,10,60,.6);z-index:99;display:flex;align-items:center;justify-content:center;padding:20px}
+.mdl .card{max-width:380px;width:100%;margin:0;text-align:center}
+footer{background:var(--pd);color:#fff;text-align:center;padding:18px 12px;margin-top:20px;font-size:.95rem}
+footer a{color:#e9d5ff;text-decoration:none;font-weight:700;display:inline-block;margin:3px 8px}
+</style>
+</head>
+<body>
+<div class="top">MINDCRAFT ONLINE ACADEMY</div>
+<main class="wrap" id="app"></main>
+<footer id="foot"></footer>
+
+<script>
+/* ===== EDIT YOUR CONTACT DETAILS HERE ===== */
+const CONTACT = {
+  phone: "0814 217 5768",
+  whatsapp: "2348142175768",   // number in international format, no + sign
+  email: ""                    // add an email here if you want one shown
+};
+/* ========================================== */
+
+const EXAM_MINUTES = 120;
+
+/* ---------- QUESTION BANK ----------
+Each question: [text, [option1..option4], indexOfCorrectOption(0-3), explanation, passageKey]
+Options are shuffled automatically when an exam starts. */
+const BANK = {
+english: {
+ name: "English Language",
+ passages: {
+  p1: "Every morning, before the sun rose over the village of Ikoyi-Ale, Mama Ngozi would carry her basket of fresh vegetables to the market. The journey took nearly an hour on foot, and the path was rough and muddy during the rainy season. Many people advised her to stop and rest, since she was past sixty, but she refused. \u2018A person who sits idle,\u2019 she often said, \u2018invites poverty to dinner.\u2019 With the little money she earned, she paid her grandchildren\u2019s school fees and bought books for them. Today, one of those grandchildren is a doctor in the city, and she never forgets to credit her grandmother\u2019s hard work for her success.",
+  p2: "Reading is one of the most useful habits a student can develop. It improves vocabulary, sharpens the mind and helps a student express ideas clearly in writing and speech. Furthermore, regular readers tend to perform better in examinations because they understand questions faster. However, many students today spend more time on social media than on books, and this has led to a drop in the quality of their English."
+ },
+ qs: [
+  ["How did Mama Ngozi travel to the market?",["By bus","On foot","By bicycle","By canoe"],1,"The passage says the journey took nearly an hour on foot.","p1"],
+  ["Why did people advise Mama Ngozi to rest?",["She was ill","She was past sixty","The market was closed","The path was flooded"],1,"They advised her because she was past sixty.","p1"],
+  ["What did she do with the money she earned?",["Built a house","Paid school fees and bought books","Bought a farm","Travelled abroad"],1,"She paid her grandchildren\u2019s fees and bought books.","p1"],
+  ["\u2018A person who sits idle invites poverty to dinner\u2019 means that",["Lazy people become poor","Poor people eat little","Dinner is expensive","Idle people are always hungry"],0,"It warns that laziness leads to poverty.","p1"],
+  ["As used in the passage, the word \u2018refused\u2019 means",["declined","agreed","forgot","hesitated"],0,"","p1"],
+  ["The passage mainly shows that Mama Ngozi was",["wealthy and proud","hardworking and determined","old and weak","selfish and stubborn"],1,"","p1"],
+  ["The best summary of the passage is that",["Social media is harmful","Reading benefits students, but many now neglect it for social media","Students must pass exams","Vocabulary is important"],1,"","p2"],
+  ["Which of these is NOT mentioned as a benefit of reading?",["Improves vocabulary","Sharpens the mind","Helps students make friends","Helps in expressing ideas clearly"],2,"Making friends is not mentioned.","p2"],
+  ["According to the passage, the drop in the quality of students\u2019 English is due to",["too much reading","more time spent on social media than on books","difficult examinations","poor teachers"],1,"","p2"],
+  ["Choose the word nearest in meaning to the capitalised word: The manager was REMORSEFUL about his decision.",["regretful","proud","angry","careless"],0],
+  ["Choose the word nearest in meaning: The teacher gave a CANDID opinion.",["frank","false","harsh","brief"],0],
+  ["Choose the word nearest in meaning: The soldiers showed great VALOUR.",["courage","fear","anger","loyalty"],0],
+  ["Choose the word nearest in meaning: The old man is very FRUGAL.",["wasteful","thrifty","generous","lazy"],1],
+  ["Choose the word nearest in meaning: The students were ELATED by the result.",["disappointed","overjoyed","confused","tired"],1],
+  ["Choose the word nearest in meaning: The judge was LENIENT with the offender.",["merciful","cruel","strict","angry"],0],
+  ["Choose the word opposite in meaning: The sea was CALM.",["rough","quiet","still","deep"],0],
+  ["Choose the word opposite in meaning: He is a very TIMID boy.",["shy","bold","weak","quiet"],1],
+  ["Choose the word opposite in meaning: Her answer was VAGUE.",["unclear","precise","long","wrong"],1],
+  ["Choose the word opposite in meaning: The company\u2019s profits DWINDLED.",["increased","shrank","vanished","stopped"],0],
+  ["Choose the word opposite in meaning: He made a GENEROUS donation.",["large","stingy","late","kind"],1],
+  ["The expression \u2018he kicked the bucket\u2019 means that he",["died","travelled","fell","resigned"],0],
+  ["Neither the teacher nor the students ____ present.",["is","was","were","has been"],2,"The verb agrees with the nearer subject, \u2018students\u2019 (plural)."],
+  ["Each of the boys ____ a book.",["have","has","are having","were"],1,"\u2018Each\u2019 is singular."],
+  ["I am looking forward to ____ you.",["see","seeing","saw","have seen"],1,"\u2018Look forward to\u2019 is followed by the -ing form."],
+  ["She has been living here ____ 2015.",["for","since","from","in"],1,"\u2018Since\u2019 is used with a point in time."],
+  ["The idiom \u2018to bury the hatchet\u2019 means to",["make peace","start a fight","hide something","plan an attack"],0],
+  ["She is a nurse, ____?",["isn\u2019t she","doesn\u2019t she","is she","wasn\u2019t she"],0,"A positive statement takes a negative tag."],
+  ["You have finished your homework, ____?",["don\u2019t you","haven\u2019t you","aren\u2019t you","didn\u2019t you"],1,"The tag repeats the auxiliary \u2018have\u2019."],
+  ["Let\u2019s go home, ____?",["will we","shall we","don\u2019t we","let us"],1,"\u2018Let\u2019s\u2019 takes \u2018shall we\u2019."],
+  ["He never comes late, ____?",["doesn\u2019t he","does he","is he","did he"],1,"\u2018Never\u2019 makes the statement negative, so the tag is positive."]
+ ]
+},
+maths: {
+ name: "Mathematics",
+ qs: [
+  ["Convert 101101\u2082 to base ten.",["43","45","47","41"],1,"32 + 8 + 4 + 1 = 45"],
+  ["Convert 25\u2081\u2080 to base two.",["10011","11001","11010","10101"],1,"25 = 16 + 8 + 1 = 11001\u2082"],
+  ["Evaluate 110\u2082 + 101\u2082.",["1001\u2082","1011\u2082","1101\u2082","1111\u2082"],1,"6 + 5 = 11 = 1011\u2082"],
+  ["Convert 342\u2085 to base ten.",["87","97","107","92"],1,"3(25) + 4(5) + 2 = 97"],
+  ["Evaluate 111\u2082 \u00d7 11\u2082.",["10101\u2082","11011\u2082","10011\u2082","11101\u2082"],0,"7 \u00d7 3 = 21 = 10101\u2082"],
+  ["Evaluate 1011\u2082 \u2212 110\u2082.",["101\u2082","111\u2082","100\u2082","110\u2082"],0,"11 \u2212 6 = 5 = 101\u2082"],
+  ["Convert 47\u2081\u2080 to base eight.",["57\u2088","75\u2088","67\u2088","47\u2088"],0,"47 = 5(8) + 7"],
+  ["If 34\u2093 = 28\u2081\u2080, find x.",["6","7","8","9"],2,"3x + 4 = 28, so x = 8"],
+  ["Convert 123\u2084 to base ten.",["25","27","29","31"],1,"16 + 8 + 3 = 27"],
+  ["Convert 52\u2088 to base two.",["101010\u2082","110010\u2082","101100\u2082","100110\u2082"],0,"5 = 101 and 2 = 010, giving 101010"],
+  ["Simplify 2/3 + 3/4.",["5/7","1 5/12","1 1/12","17/7"],1,"8/12 + 9/12 = 17/12 = 1 5/12"],
+  ["Find 3/5 of 250.",["100","150","120","175"],1,"250 \u00f7 5 \u00d7 3 = 150"],
+  ["Express 0.375 as a fraction in its lowest terms.",["3/8","1/3","5/8","3/5"],0,"375/1000 = 3/8"],
+  ["Express 0.004567 correct to 3 significant figures.",["0.00456","0.00457","0.0046","0.00460"],1,"The first significant figure is 4."],
+  ["A man\u2019s salary rose from \u20a640,000 to \u20a646,000. Find the percentage increase.",["12%","15%","18%","20%"],1,"6000/40000 \u00d7 100 = 15%"],
+  ["Evaluate 0.6 \u00d7 0.04.",["0.24","0.024","0.0024","2.4"],1,"6 \u00d7 4 = 24, with three decimal places."],
+  ["Express 45% as a fraction in its lowest terms.",["9/20","4/5","5/9","45/10"],0,"45/100 = 9/20"],
+  ["Simplify 1/2 \u00f7 3/4.",["3/8","2/3","3/2","1/3"],1,"1/2 \u00d7 4/3 = 2/3"],
+  ["15% of a number is 45. Find the number.",["200","300","400","450"],1,"45 \u00f7 0.15 = 300"],
+  ["Correct 25.0468 to 2 decimal places.",["25.04","25.05","25.047","25.00"],1,"The third decimal digit is 6, so round up."],
+  ["Simplify (2\u2075 \u00d7 2\u00b3) \u00f7 2\u2076.",["2","4","8","16"],1,"2^(5+3\u22126) = 2\u00b2 = 4"],
+  ["Evaluate 27^(2/3).",["6","9","18","3"],1,"(\u221b27)\u00b2 = 3\u00b2 = 9"],
+  ["If log\u2081\u2080 2 = 0.3010, find log\u2081\u2080 8.",["0.6020","0.9030","1.2040","0.4515"],1,"log 8 = 3 log 2 = 0.9030"],
+  ["Simplify \u221a50.",["5\u221a2","25\u221a2","2\u221a5","10\u221a2"],0,"\u221a(25 \u00d7 2) = 5\u221a2"],
+  ["Rationalise 1/\u221a3.",["\u221a3/3","\u221a3","1/3","3\u221a3"],0,"Multiply top and bottom by \u221a3."],
+  ["Solve 2\u02e3 = 32.",["4","5","6","16"],1,"32 = 2\u2075"],
+  ["Evaluate log\u2082 16.",["2","3","4","8"],2,"16 = 2\u2074"],
+  ["Simplify (\u221a3 + \u221a2)(\u221a3 \u2212 \u221a2).",["1","5","\u221a6","0"],0,"Difference of two squares: 3 \u2212 2 = 1"],
+  ["Evaluate (1/4)^(\u22122).",["1/16","8","16","1/8"],2,"(4)\u00b2 = 16"],
+  ["Evaluate log\u2081\u2080 5 + log\u2081\u2080 20.",["1","2","10","100"],1,"log(5 \u00d7 20) = log 100 = 2"]
+ ]
+},
+biology: {
+ name: "Biology",
+ qs: [
+  ["Which of the following is NOT a characteristic of living things?",["Respiration","Growth","Crystallisation","Reproduction"],2],
+  ["The basic structural and functional unit of life is the",["tissue","cell","organ","atom"],1],
+  ["The cell theory was proposed by",["Robert Hooke and Mendel","Schleiden and Schwann","Louis Pasteur and Darwin","Brown and Lamarck"],1,"Schleiden (plants) and Schwann (animals) proposed that all living things are made of cells."],
+  ["The term \u2018cell\u2019 was first used by",["Robert Hooke","Robert Brown","Gregor Mendel","Charles Darwin"],0,"Hooke observed cork under a microscope."],
+  ["The \u2018powerhouse\u2019 of the cell is the",["mitochondrion","ribosome","nucleus","vacuole"],0,"Mitochondria release energy during respiration."],
+  ["The site of protein synthesis in the cell is the",["ribosome","lysosome","Golgi apparatus","centriole"],0],
+  ["Which of these is present in plant cells but absent in animal cells?",["Cell membrane","Cytoplasm","Chloroplast","Nucleus"],2],
+  ["The cell wall of a plant cell is made mainly of",["cellulose","protein","chitin","starch"],0],
+  ["Which of the following is a unicellular organism?",["Amoeba","Spirogyra","Hydra","Mushroom"],0],
+  ["Which of the following is a multicellular organism?",["Paramecium","Yeast","Euglena","Earthworm"],3],
+  ["A prokaryotic cell lacks",["a cell membrane","ribosomes","a true (membrane-bound) nucleus","cytoplasm"],2],
+  ["Which of these is a prokaryote?",["Bacterium","Amoeba","Yeast","Paramecium"],0],
+  ["The structure that controls the entry and exit of substances in a cell is the",["cell wall","cell membrane","nucleolus","vacuole"],1,"The cell membrane is selectively permeable."],
+  ["Which organelle contains digestive enzymes?",["Lysosome","Golgi apparatus","Ribosome","Centriole"],0],
+  ["The Golgi apparatus is mainly concerned with",["photosynthesis","packaging and secretion of cell products","respiration","cell division"],1],
+  ["The genetic material (DNA) of a eukaryotic cell is found mainly in the",["nucleus","vacuole","ribosome","cell wall"],0],
+  ["A group of similar cells performing the same function is called a",["tissue","organ","system","organelle"],0],
+  ["The correct order of organisation in a multicellular organism is",["cell \u2192 tissue \u2192 organ \u2192 system \u2192 organism","tissue \u2192 cell \u2192 organ \u2192 system \u2192 organism","cell \u2192 organ \u2192 tissue \u2192 system \u2192 organism","organ \u2192 cell \u2192 tissue \u2192 organism \u2192 system"],0],
+  ["Which of the following distinguishes a living thing from a non-living thing?",["Ability to move from place to place","Having a definite shape","Ability to respire","Being made of matter"],2,"Both living and non-living things are made of matter; only living things respire."],
+  ["Organisms that manufacture their own food are called",["autotrophs","heterotrophs","parasites","saprophytes"],0],
+  ["Excretion is the removal of",["undigested food","metabolic waste products","water only","dead cells only"],1],
+  ["The ability of living things to respond to stimuli is called",["irritability (sensitivity)","excretion","nutrition","growth"],0],
+  ["The large permanent vacuole in a plant cell stores",["cell sap (water and dissolved substances)","DNA","chlorophyll","ribosomes"],0],
+  ["A student views a cell with an eyepiece lens of \u00d710 and an objective lens of \u00d740. The total magnification is",["50","400","4","440"],1,"10 \u00d7 40 = 400"],
+  ["Which of these mature cells has no nucleus?",["Red blood cell (mammal)","White blood cell","Nerve cell","Liver cell"],0],
+  ["Paramecium moves by means of",["cilia","flagella","pseudopodia","tentacles"],0],
+  ["The cell theory states that",["only plants are made of cells","all living things are made of cells and new cells come from pre-existing cells","cells arise from non-living matter","cells are found only in animals"],1],
+  ["The rough endoplasmic reticulum appears rough because of",["ribosomes attached to it","lysosomes on it","starch grains","chloroplasts"],0],
+  ["The centrioles are involved in",["spindle formation during cell division","photosynthesis","protein digestion","storage of water"],0],
+  ["A nerve cell is long and branched because it",["stores food","transmits impulses","carries oxygen","secretes enzymes"],1,"This is an example of cell specialisation."]
+ ]
+},
+chemistry: {
+ name: "Chemistry",
+ qs: [
+  ["Which method is used to separate a mixture of sand and water?",["Filtration","Sublimation","Fractional distillation","Chromatography"],0],
+  ["Common salt can be obtained from sea water by",["filtration","evaporation","sublimation","using a magnet"],1],
+  ["Two miscible liquids with different boiling points are best separated by",["filtration","fractional distillation","decantation","sublimation"],1],
+  ["A mixture of ammonium chloride and sodium chloride can be separated by",["sublimation","filtration","using a magnet","decantation"],0,"Ammonium chloride sublimes; sodium chloride does not."],
+  ["Oil and water can be separated using a",["separating funnel","filter paper","magnet","condenser only"],0],
+  ["Chromatography separates substances based on their",["different solubilities and rates of movement through a medium","different colours only","different masses only","different melting points only"],0],
+  ["Pure water can be prepared from sea water by",["distillation","filtration","decantation","sieving"],0],
+  ["A pure substance has",["a variable composition","a sharp (fixed) melting point","no definite boiling point","a mixture of particles"],1],
+  ["A mixture of iron filings and sulphur can be separated using a",["magnet","separating funnel","filter paper","condenser"],0],
+  ["Which of the following is a mixture?",["Air","Water","Carbon(IV) oxide","Sodium chloride"],0],
+  ["An ionic bond is formed by",["transfer of electrons","sharing of electrons","sharing of protons","transfer of neutrons"],0],
+  ["A covalent bond is formed by",["transfer of electrons","sharing of electrons","attraction between ions","a sea of electrons"],1],
+  ["Which of these compounds has ionic bonding?",["NaCl","H\u2082O","CO\u2082","CH\u2084"],0],
+  ["An element with atomic number 17 has how many valence electrons?",["1","5","7","8"],2,"Electron configuration is 2, 8, 7."],
+  ["\u2018Matter can neither be created nor destroyed in a chemical reaction\u2019 is the law of",["definite proportions","multiple proportions","conservation of mass","Gay-Lussac"],2],
+  ["Copper(II) oxide from different sources always contains copper and oxygen in the same ratio by mass. This illustrates the law of",["definite proportions","multiple proportions","conservation of mass","reciprocal proportions"],0],
+  ["Carbon forms CO and CO\u2082. The fixed mass of carbon combines with oxygen in a simple whole-number ratio. This illustrates the law of",["definite proportions","multiple proportions","conservation of mass","Boyle"],1],
+  ["Which of these species contains a dative (coordinate) bond?",["NH\u2084\u207a","CH\u2084","NaCl","N\u2082"],0,"The nitrogen atom donates a lone pair to H\u207a."],
+  ["Metallic bonding is the attraction between",["positive metal ions and delocalised electrons","two non-metal atoms","positive and negative ions","molecules only"],0],
+  ["The formula of aluminium oxide is",["AlO","Al\u2082O\u2083","Al\u2083O\u2082","AlO\u2083"],1,"Al is 3+ and O is 2\u2212."],
+  ["According to the kinetic theory, the particles of matter are",["in constant random motion","stationary","arranged only in lattices","always touching"],0],
+  ["In which state of matter are the particles farthest apart?",["Solid","Liquid","Gas","They are equal"],2],
+  ["Boyle\u2019s law states that, at constant temperature, the volume of a fixed mass of gas is",["directly proportional to its pressure","inversely proportional to its pressure","independent of its pressure","directly proportional to its temperature"],1],
+  ["Charles\u2019s law states that, at constant pressure, the volume of a fixed mass of gas is directly proportional to its",["absolute (Kelvin) temperature","mass","Celsius temperature","density"],0],
+  ["Convert 27\u00b0C to Kelvin.",["246 K","273 K","300 K","327 K"],2,"27 + 273 = 300 K"],
+  ["A gas occupies 200 cm\u00b3 at 2 atm. What is its volume at 4 atm if the temperature is constant?",["50 cm\u00b3","100 cm\u00b3","400 cm\u00b3","800 cm\u00b3"],1,"P\u2081V\u2081 = P\u2082V\u2082, so V\u2082 = (2 \u00d7 200) \u00f7 4 = 100 cm\u00b3"],
+  ["300 cm\u00b3 of a gas at 300 K is heated to 600 K at constant pressure. Its new volume is",["150 cm\u00b3","300 cm\u00b3","600 cm\u00b3","900 cm\u00b3"],2,"V\u2081/T\u2081 = V\u2082/T\u2082"],
+  ["Which of these gases diffuses fastest under the same conditions?",["Oxygen","Carbon(IV) oxide","Hydrogen","Nitrogen"],2,"Hydrogen has the lowest molar mass."],
+  ["The pressure of a gas is caused by",["collisions of gas molecules with the walls of the container","gas molecules attracting each other","the weight of the container","the colour of the gas"],0],
+  ["Standard temperature and pressure (s.t.p.) are",["273 K and 760 mmHg","298 K and 760 mmHg","273 K and 1000 mmHg","0 K and 760 mmHg"],0]
+ ]
+},
+physics: {
+ name: "Physics",
+ qs: [
+  ["The SI unit of length is the",["metre","centimetre","kilometre","foot"],0],
+  ["Which of the following is a fundamental quantity?",["Mass","Force","Velocity","Area"],0],
+  ["Which of these is a derived unit?",["Kilogram","Metre","Second","Newton"],3],
+  ["The newton expressed in base units is",["kg m s\u207b\u00b2","kg m\u00b2 s\u207b\u00b2","kg s\u207b\u00b2","kg m s\u207b\u00b9"],0,"F = ma"],
+  ["Which instrument measures a very small length to the nearest 0.01 mm?",["Metre rule","Vernier calipers","Micrometer screw gauge","Measuring tape"],2],
+  ["A cuboid is 2 m \u00d7 3 m \u00d7 4 m. Its volume is",["24 m\u00b2","24 m\u00b3","9 m\u00b3","24 m"],1],
+  ["Convert 72 km/h to m/s.",["20 m/s","25 m/s","72 m/s","15 m/s"],0,"72 \u00d7 1000 \u00f7 3600 = 20"],
+  ["The prefix \u2018milli\u2019 means",["10\u207b\u00b3","10\u207b\u2076","10\u00b3","10\u207b\u00b9"],0],
+  ["The dimension of speed is",["LT\u207b\u00b9","LT","L\u00b2T\u207b\u00b9","MLT\u207b\u00b9"],0],
+  ["The SI unit of density is",["kg m\u207b\u00b3","kg m\u207b\u00b2","g cm\u207b\u00b2","N m\u207b\u00b3"],0],
+  ["Which of the following is a vector quantity?",["Speed","Distance","Velocity","Mass"],2],
+  ["Which of the following is a scalar quantity?",["Force","Displacement","Energy","Acceleration"],2],
+  ["Two forces of 3 N and 4 N act at right angles to each other. The magnitude of the resultant is",["1 N","5 N","7 N","12 N"],1,"\u221a(3\u00b2 + 4\u00b2) = 5"],
+  ["Two forces of 8 N and 6 N act in opposite directions along the same line. The resultant is",["2 N","14 N","48 N","10 N"],0],
+  ["A vector quantity has",["magnitude only","direction only","both magnitude and direction","neither magnitude nor direction"],2],
+  ["A man walks 6 km east and then 8 km north. His displacement from the starting point is",["14 km","10 km","2 km","48 km"],1,"\u221a(6\u00b2 + 8\u00b2) = 10 km"],
+  ["The horizontal component of a 100 N force acting at 60\u00b0 above the horizontal is",["50 N","86.6 N","100 N","30 N"],0,"100 cos 60\u00b0 = 50 N"],
+  ["Which pair consists of scalar quantities only?",["Speed and distance","Velocity and force","Displacement and weight","Momentum and speed"],0],
+  ["Which of the following is a vector quantity?",["Mass","Time","Weight","Temperature"],2,"Weight is a force and has direction."],
+  ["The distance travelled by a body is always",["less than the magnitude of its displacement","greater than or equal to the magnitude of its displacement","equal to its velocity","negative"],1],
+  ["A car travels 150 km in 2 hours. Its average speed is",["75 km/h","300 km/h","150 km/h","50 km/h"],0],
+  ["A car increases its velocity from 10 m/s to 30 m/s in 5 s. Its acceleration is",["2 m/s\u00b2","4 m/s\u00b2","6 m/s\u00b2","8 m/s\u00b2"],1,"(30 \u2212 10) \u00f7 5 = 4"],
+  ["A body falls freely from rest for 3 s. Taking g = 10 m/s\u00b2, the distance fallen is",["30 m","45 m","90 m","15 m"],1,"s = \u00bdgt\u00b2 = \u00bd \u00d7 10 \u00d7 9 = 45 m"],
+  ["A body starts from rest with an acceleration of 2 m/s\u00b2. Its velocity after 6 s is",["8 m/s","10 m/s","12 m/s","14 m/s"],2,"v = u + at = 0 + 2 \u00d7 6"],
+  ["The slope of a velocity-time graph gives the",["distance","acceleration","speed","displacement"],1],
+  ["The area under a velocity-time graph represents the",["acceleration","force","distance travelled","time taken"],2],
+  ["A ball thrown vertically upward has what velocity at its maximum height?",["Zero","Maximum","Equal to g","Equal to its initial velocity"],0],
+  ["A car moving at 20 m/s is brought to rest in 4 s. Its retardation is",["5 m/s\u00b2","80 m/s\u00b2","16 m/s\u00b2","4 m/s\u00b2"],0,"20 \u00f7 4 = 5"],
+  ["A body starting from rest with an acceleration of 4 m/s\u00b2 covers what distance in 5 s?",["20 m","50 m","100 m","10 m"],1,"s = \u00bdat\u00b2 = \u00bd \u00d7 4 \u00d7 25 = 50 m"],
+  ["A body moving in a circle at constant speed has",["constant velocity","zero acceleration","acceleration directed towards the centre","no force acting on it"],2]
+ ]
+}
+};
+
+const OPTIONAL = ["maths","biology","chemistry","physics"];
+const DESC = {
+  english:"Comprehension, synonyms, antonyms, lexis and structure, summary, question tags",
+  maths:"Number bases; fractions, decimals, approximations and percentages; indices, logarithms and surds",
+  biology:"Living organisms, cells, cell theory, types of cells, uni/multicellular organisms, organelles",
+  chemistry:"Separation of mixtures; chemical combination; kinetic theory and gas laws",
+  physics:"Measurements and units; scalars and vectors; motion"
+};
+const LETTERS = ["A","B","C","D"];
+let student="", chosen=[], exam=[], si=0, qi=0, endAt=0, timer=null, active=false, leaves=0;
+
+const app = document.getElementById("app");
+const foot = document.getElementById("foot");
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* In-page pop-up (works everywhere, unlike alert/confirm) */
+let mcb = null;
+function modal(msg, okText, cb, cancelText){
+  closeModal(); mcb = cb || null;
+  const d = document.createElement("div"); d.id = "mdl"; d.className = "mdl";
+  d.innerHTML = '<div class="card"><p style="font-weight:700;margin-top:0">' + esc(msg) + '</p><div class="nav">' +
+    (cancelText ? '<button class="btn alt sm" onclick="closeModal()">' + esc(cancelText) + '</button>' : '') +
+    '<button class="btn sm" onclick="modalOk()">' + esc(okText) + '</button></div></div>';
+  document.body.appendChild(d);
+}
+function closeModal(){ const m = document.getElementById("mdl"); if(m) m.remove(); }
+function modalOk(){ const c = mcb; mcb = null; closeModal(); if(c) c(); }
+
+function setFooter(show){
+  foot.style.display = show ? "block" : "none";
+  foot.innerHTML = "<div><b>Contact MINDCRAFT ONLINE ACADEMY</b></div>" +
+    '<a href="tel:' + esc(CONTACT.phone.replace(/\s/g,"")) + '">\u260e ' + esc(CONTACT.phone) + '</a>' +
+    '<a href="https://wa.me/' + esc(CONTACT.whatsapp) + '" target="_blank" rel="noopener">WhatsApp</a>' +
+    (CONTACT.email ? '<a href="mailto:' + esc(CONTACT.email) + '">' + esc(CONTACT.email) + '</a>' : '');
+}
+
+/* ---------- SCREEN 1: FRONT PAGE ---------- */
+function home(){
+  setFooter(true);
+  app.innerHTML =
+   '<div class="card hero">' +
+   '<h1>MINDCRAFT ONLINE ACADEMY</h1>' +
+   '<h2>Weekly Mock Exam</h2>' +
+   '<p class="muted">English \u2022 Biology \u2022 Physics \u2022 Chemistry \u2022 Mathematics</p>' +
+   '<label for="nm">Enter your full name</label>' +
+   '<input type="text" id="nm" placeholder="e.g. Chinedu Okafor" value="' + esc(student) + '" autocomplete="name">' +
+   '<button class="btn" onclick="toSubjects()">Continue</button>' +
+   '</div>';
+}
+
+/* ---------- SCREEN 2: CHOOSE SUBJECTS ---------- */
+function toSubjects(){
+  const v = document.getElementById("nm");
+  if(v){ student = v.value.trim(); }
+  if(student.length < 2){ modal("Please enter your full name to continue.", "OK"); return; }
+  renderSubjects();
+}
+function renderSubjects(){
+  setFooter(true);
+  let h = '<div class="card"><h2 style="margin-top:0;color:var(--p)">Hello, ' + esc(student) + '</h2>' +
+    '<p>English is <b>compulsory</b>. Choose <b>3</b> more subjects.</p>' +
+    '<div class="sub on lock"><div class="tick">\u2713</div><div><b>English Language</b><small>' + DESC.english + '</small></div><span class="tag">Compulsory</span></div>';
+  OPTIONAL.forEach(function(k){
+    const on = chosen.indexOf(k) > -1;
+    h += '<div class="sub ' + (on?"on":"") + '" onclick="toggleSub(\'' + k + '\')"><div class="tick">' + (on?"\u2713":"") + '</div><div><b>' + BANK[k].name + '</b><small>' + DESC[k] + '</small></div></div>';
+  });
+  h += '<p class="muted" style="text-align:center">Selected: <b>' + chosen.length + '/3</b></p>' +
+    '<button class="btn" ' + (chosen.length===3?"":"disabled") + ' onclick="toRules()">Proceed</button>' +
+    '<button class="btn alt" onclick="home()">Back</button></div>';
+  app.innerHTML = h;
+}
+function toggleSub(k){
+  const i = chosen.indexOf(k);
+  if(i > -1){ chosen.splice(i,1); }
+  else if(chosen.length < 3){ chosen.push(k); }
+  else { modal("You can only choose 3 subjects besides English. Untick one first.", "OK"); return; }
+  renderSubjects();
+}
+
+/* ---------- SCREEN 3: RULES ---------- */
+function toRules(){
+  setFooter(true);
+  const names = ["English Language"].concat(chosen.map(function(k){return BANK[k].name;}));
+  app.innerHTML =
+   '<div class="card"><h2 style="margin-top:0;color:var(--p)">Exam Rules</h2>' +
+   '<p><b>Your subjects:</b> ' + names.join(", ") + '</p>' +
+   '<ol class="rules">' +
+   '<li>Your exam is <b>2 hours (120 minutes)</b>.</li>' +
+   '<li>Once you click <b>Start Exam</b>, the exam starts <b>immediately</b> and the timer cannot be paused.</li>' +
+   '<li>Each subject has <b>30 questions</b> with 4 options (A to D), making <b>120 questions</b> in all.</li>' +
+   '<li><b>Do not leave this site</b> during the exam. Switching tabs or apps is recorded.</li>' +
+   '<li>Do not refresh or close the page, or you will lose your progress.</li>' +
+   '<li>The exam submits automatically when the time is up.</li>' +
+   '<li><b>Corrections</b> will be shown after you finish the mock.</li>' +
+   '</ol>' +
+   '<div class="good">GOODLUCK on your MOCK!</div>' +
+   '<button class="btn" onclick="startExam()">Start Exam</button>' +
+   '<button class="btn alt" onclick="renderSubjects()">Back</button></div>';
+}
+
+/* ---------- EXAM ---------- */
+function buildSubject(k){
+  const d = BANK[k];
+  return {
+    key:k, name:d.name, passages:d.passages||{}, ans:[],
+    qs: d.qs.map(function(r){
+      const opts = shuffle(r[1].map(function(t,i){return {t:t, c:i===r[2]};}));
+      return {t:r[0], opts:opts, e:r[3]||"", p:r[4]||""};
+    })
+  };
+}
+function startExam(){
+  exam = ["english"].concat(chosen).map(buildSubject);
+  si = 0; qi = 0; leaves = 0; active = true;
+  endAt = Date.now() + EXAM_MINUTES*60*1000;
+  setFooter(false);
+  clearInterval(timer);
+  timer = setInterval(tick, 1000);
+  renderExam();
+}
+function fmt(ms){
+  const s = Math.max(0, Math.floor(ms/1000));
+  const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), x = s%60;
+  return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(x).padStart(2,"0");
+}
+function tick(){
+  const left = endAt - Date.now();
+  const el = document.getElementById("tm");
+  if(el){ el.textContent = fmt(left); el.className = "tm" + (left < 10*60*1000 ? " warn" : ""); }
+  if(left <= 0){ clearInterval(timer); finish(); modal("Time is up! Your exam has been submitted automatically.", "See my result"); }
+}
+function answeredCount(){ let n=0; exam.forEach(function(s){ s.ans.forEach(function(a){ if(a!==undefined) n++; }); }); return n; }
+
+function renderExam(){
+  const y = window.scrollY;
+  const s = exam[si], q = s.qs[qi];
+  let h = '<div class="bar"><span>Answered: ' + answeredCount() + '/' + (exam.length*30) + '</span><span class="tm" id="tm">' + fmt(endAt-Date.now()) + '</span></div><div class="wrap" style="padding:10px 0">';
+  if(leaves > 0){ h += '<div class="alert">\u26a0 You left the exam page ' + leaves + ' time(s). Please stay on this site.</div>'; }
+  h += '<div class="tabs">';
+  exam.forEach(function(sub,i){
+    let a = 0; sub.ans.forEach(function(v){ if(v!==undefined) a++; });
+    h += '<button class="' + (i===si?"on":"") + '" onclick="goSub(' + i + ')">' + sub.name.replace(" Language","") + ' (' + a + '/30)</button>';
+  });
+  h += '</div><div class="card">';
+  h += '<div class="muted">' + s.name + ' \u2022 Question ' + (qi+1) + ' of 30</div>';
+  if(q.p){ h += '<div class="passage" style="margin-top:10px"><b>Read the passage and answer the questions.</b><br>' + esc(s.passages[q.p]) + '</div>'; }
+  h += '<div class="q">' + esc(q.t) + '</div>';
+  q.opts.forEach(function(o,i){
+    h += '<button class="opt ' + (s.ans[qi]===i?"sel":"") + '" onclick="pick(' + i + ')"><b>' + LETTERS[i] + '</b><span>' + esc(o.t) + '</span></button>';
+  });
+  h += '<div class="nav"><button class="btn sm alt" ' + (qi===0?"disabled":"") + ' onclick="move(-1)">Previous</button>' +
+       '<button class="btn sm" ' + (qi===29?"disabled":"") + ' onclick="move(1)">Next</button></div></div>';
+  h += '<div class="card"><b>Question navigator</b><div class="pal">';
+  for(let i=0;i<30;i++){
+    h += '<button class="' + (s.ans[i]!==undefined?"ans ":"") + (i===qi?"cur":"") + '" onclick="goQ(' + i + ')">' + (i+1) + '</button>';
+  }
+  h += '</div></div><button class="btn" onclick="submitExam()">Submit Exam</button></div>';
+  app.innerHTML = h;
+  window.scrollTo(0,y);
+}
+function pick(i){ exam[si].ans[qi] = i; renderExam(); }
+function move(d){ qi = Math.min(29, Math.max(0, qi+d)); renderExam(); window.scrollTo(0,0); }
+function goQ(i){ qi = i; renderExam(); window.scrollTo(0,0); }
+function goSub(i){ si = i; qi = 0; renderExam(); window.scrollTo(0,0); }
+function submitExam(){
+  const left = exam.length*30 - answeredCount();
+  const msg = left > 0 ? ("You have " + left + " unanswered question(s). Submit anyway?") : "Submit your exam now?";
+  modal(msg, "Yes, Submit", finish, "Go back");
+}
+
+/* ---------- RESULTS ---------- */
+function isRight(s,i){ const a = s.ans[i]; return a!==undefined && s.qs[i].opts[a].c; }
+function finish(){
+  clearInterval(timer); active = false;
+  window.scrollTo(0,0);
+  setFooter(true);
+  let total = 0, jamb = 0, grid = "";
+  exam.forEach(function(s){
+    let sc = 0; for(let i=0;i<30;i++){ if(isRight(s,i)) sc++; }
+    s.score = sc; total += sc; jamb += (sc/30)*100;
+    grid += '<div class="mini"><b>' + sc + '/30</b>' + s.name.replace(" Language","") + '</div>';
+  });
+  const pct = Math.round(total/120*100);
+  let remark = pct>=70 ? "Excellent work!" : pct>=50 ? "Good effort. Keep practising!" : "Keep studying. You will improve next week!";
+  app.innerHTML =
+   '<div class="card score"><div class="muted">Mock completed for</div><h2 style="margin:4px 0;color:var(--p)">' + esc(student) + '</h2>' +
+   '<div class="big">' + Math.round(jamb) + '/400</div><div class="muted">Total correct: <b>' + total + '/120</b> \u2022 ' + pct + '%</div>' +
+   '<p><b>' + remark + '</b></p><div class="grid">' + grid + '</div>' +
+   '<button class="btn" onclick="showCorrections(0)">View Corrections</button>' +
+   '<button class="btn alt" onclick="restart()">Back to Start</button></div>';
+}
+function restart(){ chosen = []; exam = []; home(); }
+
+function showCorrections(idx){
+  window.scrollTo(0,0);
+  const s = exam[idx];
+  let h = '<div class="card"><h2 style="margin-top:0;color:var(--p)">Corrections</h2><div class="tabs">';
+  exam.forEach(function(sub,i){ h += '<button class="' + (i===idx?"on":"") + '" onclick="showCorrections(' + i + ')">' + sub.name.replace(" Language","") + ' (' + sub.score + '/30)</button>'; });
+  h += '</div>';
+  let lastP = "";
+  s.qs.forEach(function(q,i){
+    h += '<div class="cq">';
+    if(q.p && q.p !== lastP){ h += '<div class="passage"><b>Passage</b><br>' + esc(s.passages[q.p]) + '</div>'; lastP = q.p; }
+    const a = s.ans[i];
+    const st = a===undefined ? '<span class="st n">Not answered</span>' : (q.opts[a].c ? '<span class="st r">\u2713 Correct</span>' : '<span class="st w">\u2717 Wrong</span>');
+    h += '<div class="q">' + (i+1) + '. ' + esc(q.t) + '</div>' + st + '<div style="margin-top:8px">';
+    q.opts.forEach(function(o,j){
+      let c = "opt";
+      if(o.c) c += " right"; else if(a===j) c += " wrong";
+      h += '<div class="' + c + '"><b>' + LETTERS[j] + '</b><span>' + esc(o.t) + (a===j ? " (your answer)" : "") + '</span></div>';
+    });
+    h += '</div>';
+    if(q.e){ h += '<div class="exp"><b>Explanation:</b> ' + esc(q.e) + '</div>'; }
+    h += '</div>';
+  });
+  h += '<button class="btn" onclick="finish()">Back to Results</button></div>';
+  app.innerHTML = h;
+}
+
+/* ---------- ANTI-LEAVE PROTECTION ---------- */
+window.addEventListener("beforeunload", function(e){
+  if(active){ e.preventDefault(); e.returnValue = ""; return ""; }
+});
+document.addEventListener("visibilitychange", function(){
+  if(active && document.hidden){ leaves++; }
+  else if(active && !document.hidden){ renderExam(); }
+});
+
+home();
+</script>
+</body>
+</html>
